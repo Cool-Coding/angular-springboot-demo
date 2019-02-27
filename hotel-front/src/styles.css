@@ -1,0 +1,20 @@
+/* You can add global styles to this file, and also import other style files */
+
+.roomManager_switch .ant-switch-checked {
+  background-color: rgb(135, 208, 104);
+}
+
+
+.room_management .ant-table-body {
+  margin:5px 5px;
+}
+
+.logout_management .ant-table-tbody>tr>td,
+.logout_management .ant-table-thead>tr>th,
+.customer_management .ant-table-tbody>tr>td,
+.customer_management .ant-table-thead>tr>th,
+.room_management .ant-table-tbody>tr>td,
+.room_management .ant-table-thead>tr>th {
+  padding: 8px;
+  text-align:center;
+}

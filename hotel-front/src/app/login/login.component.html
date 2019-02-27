@@ -1,0 +1,99 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm($event)">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>姓名</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback>
+      <input nz-input formControlName="name" placeholder="客人姓名">
+      <nz-form-explain *ngIf="validateForm.get('name').dirty && validateForm.get('name').errors || validateForm.get('name').pending ">
+        <ng-container *ngIf="validateForm.get('name').hasError('required')">
+          请填写客人姓名!
+        </ng-container>
+        <ng-container *ngIf="validateForm.get('name').hasError('duplicated')">
+          客人姓名重复!
+        </ng-container>
+        <ng-container *ngIf="validateForm.get('name').pending">
+          校验中....
+        </ng-container>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>身份证号</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback>
+      <input nz-input formControlName="idCard" placeholder="客人身份证编号" maxlength="18">
+      <nz-form-explain *ngIf="validateForm.get('idCard').dirty && validateForm.get('idCard').errors">
+        <ng-container *ngIf="validateForm.get('idCard').hasError('wrong')">
+          请填写有效身份证编号!
+        </ng-container>
+        <ng-container *ngIf="validateForm.get('idCard').hasError('required')">
+          请填写客人身份证号!
+        </ng-container>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>手机号</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback>
+      <input nz-input formControlName="phoneNo" placeholder="手机号码" maxlength="11">
+      <nz-form-explain *ngIf="validateForm.get('phoneNo').dirty && validateForm.get('phoneNo').errors">
+        <ng-container *ngIf="validateForm.get('phoneNo').hasError('wrong')">
+          请填写正确的手机号码!
+        </ng-container>
+        <ng-container *ngIf="validateForm.get('phoneNo').hasError('required')">
+          请填写客人手机号码!
+        </ng-container>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>客房号</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback>
+      <app-room-no-search formControlName="roomNo" (ngModelChange)="onRoomNoChange()" [showUnused] = false></app-room-no-search>
+      <nz-form-explain *ngIf="validateForm.get('roomNo').dirty && validateForm.get('roomNo').errors">
+        <ng-container *ngIf="validateForm.get('roomNo').hasError('required')">
+          请填写客房号!
+        </ng-container>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="7" [nzXs]="24" nzRequired>日期</nz-form-label>
+    <nz-form-control [nzSm]="12" [nzXs]="20" >
+      <ng-container *ngIf="room.type === '小时房'">
+        <nz-range-picker nzShowTime
+                         formControlName="rangeDate"
+                         [nzPlaceHolder]="['入住日期','退房日期']"
+                         [nzDisabledDate]="disabledDate"
+                         [ngModel]="room.status === 1 ? [room.checkInDate,room.checkOutDate] : null"
+                         [nzDisabled]="room.status === 1"
+        ></nz-range-picker>
+      </ng-container>
+
+      <ng-container *ngIf="this.room.type !== '小时房'">
+      <nz-range-picker
+        formControlName="rangeDate"
+        [nzPlaceHolder]="['入住日期','退房日期']"
+        [nzDisabledDate]="disabledDate"
+        [ngModel]="room.status === 1 ? [room.checkInDate,room.checkOutDate] : null"
+        [nzDisabled]="room.status === 1"></nz-range-picker>
+      </ng-container>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7">备注</nz-form-label>
+    <nz-form-control [nzSpan]="12" >
+      <textarea formControlName="comment" nz-input rows="2" placeholder="备注"></textarea>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control [nzOffset]="7" [nzSpan]="12">
+      <button nz-button nzType="primary" [disabled]="!validateForm.valid">确认登记</button>
+      <button nz-button (click)="resetForm($event)">取消登记</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>

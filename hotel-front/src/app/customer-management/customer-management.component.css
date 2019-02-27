@@ -1,0 +1,22 @@
+.ant-advanced-search-form {
+  padding: 24px;
+  background: #ffffff;
+  border-radius: 6px;
+  min-width: 600px;
+}
+
+.search-result-list {
+  margin:0 5px;
+  border-radius: 6px;
+  background-color: #ffffff;
+  min-height: 200px;
+  text-align: center;
+}
+
+button {
+  margin-left: 8px;
+}
+
+a{
+  margin:5px;
+}

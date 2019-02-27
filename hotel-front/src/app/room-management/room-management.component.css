@@ -1,0 +1,12 @@
+[nz-button] {
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+.editable-add-btn {
+  margin-left: 10px;
+}
+
+.wrong_message {
+  color: #f5222d;
+}

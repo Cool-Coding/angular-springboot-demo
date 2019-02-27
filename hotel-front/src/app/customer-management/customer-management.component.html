@@ -1,0 +1,133 @@
+<form nz-form [formGroup]="validateForm" class="ant-advanced-search-form"  (ngSubmit)="submitForm($event)">
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="8">姓名</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <input nz-input formControlName="name" placeholder="客人姓名">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="8">身份证号</nz-form-label>
+        <nz-form-control [nzSpan]="16" nzHasFeedback>
+          <input nz-input formControlName="idCard" placeholder="客人身份证编号">
+          <nz-form-explain *ngIf="validateForm.get('idCard').dirty && validateForm.get('idCard').errors">
+            请填写有效身份证编号!
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="8">手机号</nz-form-label>
+        <nz-form-control [nzSpan]="16" nzHasFeedback>
+          <input nz-input formControlName="phoneNo" placeholder="手机号码">
+          <nz-form-explain *ngIf="validateForm.get('phoneNo').dirty && validateForm.get('phoneNo').errors">
+            请填写正确的手机号码!
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+  </div>
+
+  <div nz-row [nzGutter]="24" >
+    <div nz-col [nzSpan]="24" style="text-align: right;">
+      <button nz-button [nzType]="'primary'">查找</button>
+      <button nz-button (click)="resetForm($event)">清除</button>
+    </div>
+  </div>
+</form>
+<div class="search-result-list">
+  <div class="customer_management">
+  <nz-table
+    #editRowTable
+    nzBordered
+    [nzData]="dataSet"
+    [nzPageSize]="8">
+    <thead>
+    <tr>
+      <th nzWidth="10%">姓名</th>
+      <th nzWidth="20%">身份证号</th>
+      <th nzWidth="15%">手机号</th>
+      <th nzWidth="25%">客房号</th>
+      <th nzWidth="10%">备注</th>
+      <th nzWidth="20%">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of editRowTable.data">
+      <td>
+        <div class="editable-cell">
+          <div class="editable-cell-text-wrapper">
+            <ng-container *ngIf="!editCache[data.key].edit">
+              {{data.name}}
+            </ng-container>
+            <ng-container *ngIf="editCache[data.key].edit">
+              <input type="text" nz-input [(ngModel)]="editCache[data.key].data.name">
+            </ng-container>
+          </div>
+        </div>
+      </td>
+      <td>
+        <ng-container *ngIf="!editCache[data.key].edit">
+          {{data.idCard}}
+        </ng-container>
+        <ng-container *ngIf="editCache[data.key].edit">
+          <input type="text" nz-input [(ngModel)]="editCache[data.key].data.idCard">
+        </ng-container>
+      </td>
+      <td>
+        <ng-container *ngIf="!editCache[data.key].edit">
+          {{data.phoneNo}}
+        </ng-container>
+        <ng-container *ngIf="editCache[data.key].edit">
+          <input type="text" nz-input [(ngModel)]="editCache[data.key].data.phoneNo">
+        </ng-container>
+      </td>
+      <td>
+        <ng-container>
+          {{data.roomNos}}
+        </ng-container>
+      </td>
+      <td>
+        <ng-container *ngIf="!editCache[data.key].edit">
+          {{data.comment}}
+        </ng-container>
+        <ng-container *ngIf="editCache[data.key].edit">
+          <input type="text" nz-input [(ngModel)]="editCache[data.key].data.comment">
+        </ng-container>
+      </td>
+      <td>
+        <nz-spin [nzSpinning]="data.isSpinning">
+        <div class="editable-row-operations">
+          <ng-container *ngIf="!editCache[data.key].edit">
+            <a (click)="startEdit(data.key)">更改</a>
+          </ng-container>
+          <ng-container *ngIf="editCache[data.key].edit">
+            <a (click)="saveEdit(data.key)">保存</a>
+            <nz-popconfirm [nzTitle]="'确定不保存?'" (nzOnConfirm)="cancelEdit(data.key)">
+              <a nz-popconfirm>取消</a>
+            </nz-popconfirm>
+          </ng-container>
+          <nz-divider nzType="vertical"></nz-divider>
+          <ng-container>
+            <nz-popconfirm [nzTitle]="'确定删除?'" (nzOnConfirm)="delete(data.key)" *ngIf ="data.roomNos == null || data.roomNos.length == 0">
+              <a nz-popconfirm>删除</a>
+            </nz-popconfirm>
+            <ng-container style="color: #D9D9D9" *ngIf ="data.roomNos != null && data.roomNos.length > 0">
+              删除
+            </ng-container>
+          </ng-container>
+        </div>
+        </nz-spin>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+  </div>
+</div>

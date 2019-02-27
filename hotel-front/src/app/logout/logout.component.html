@@ -1,0 +1,154 @@
+<form nz-form [formGroup]="validateForm" class="ant-advanced-search-form"  (ngSubmit)="submitForm($event,validateForm.value)">
+  <div nz-row [nzGutter]="24" nzType="flex"  nzJustify="center">
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="8">房间号</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <app-room-no-search formControlName="roomNo" ></app-room-no-search>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <div nz-row [nzGutter]="24" *ngIf="!isCollapse">
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="8">姓名</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <input nz-input formControlName="name" placeholder="客人姓名">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div nz-col [nzSpan]="8">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="8">身份证号</nz-form-label>
+      <nz-form-control [nzSpan]="16" nzHasFeedback>
+        <input nz-input formControlName="idCard" placeholder="客人身份证编号">
+        <nz-form-explain *ngIf="validateForm.get('idCard').dirty && validateForm.get('idCard').errors">
+          请填写有效身份证编号!
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    </div>
+
+    <div nz-col [nzSpan]="8">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="8">手机号</nz-form-label>
+      <nz-form-control [nzSpan]="16" nzHasFeedback>
+        <input nz-input formControlName="phoneNo" placeholder="手机号码">
+        <nz-form-explain *ngIf="validateForm.get('phoneNo').dirty && validateForm.get('phoneNo').errors">
+          请填写正确的手机号码!
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    </div>
+
+  </div>
+
+  <div nz-row [nzGutter]="24" >
+    <div nz-col [nzSpan]="24" style="text-align: right;">
+      <button nz-button [nzType]="'primary'">查找</button>
+      <button nz-button (click)="resetForm($event)">清除</button>
+      <a style="margin-left:8px;font-size:12px;" (click)="toggleCollapse()">
+        更多筛选条件
+        <i class="anticon anticon-down" *ngIf="isCollapse"></i>
+        <i class="anticon anticon-up" *ngIf="!isCollapse"></i>
+      </a>
+    </div>
+  </div>
+</form>
+<div class="search-result-list">
+  <div class="logout_management">
+  <nz-table #nestedTable [nzData]="rooms" [nzPageSize]="10">
+    <thead>
+    <tr>
+      <th nzShowExpand></th>
+      <th>客房号</th>
+      <th>房型</th>
+      <th>房价</th>
+      <th>床位数</th>
+      <th>客人数</th>
+      <th>入住日期</th>
+      <th>退房日期</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    <ng-template ngFor let-data [ngForOf]="nestedTable.data">
+      <tr>
+        <td nzShowExpand [(nzExpand)]="data.expand"></td>
+        <td>{{data.roomNo}}</td>
+        <td>{{data.type}}</td>
+        <td>{{data.money}}</td>
+        <td>{{data.beds.length}}</td>
+        <td>{{data.customers.length}}</td>
+        <td>{{data.checkInDate  | date: (data.type === '小时房' ? 'yyyy-MM-dd HH:mm:ss' : 'yyyy-MM-dd')}}</td>
+        <td>{{data.checkOutDate | date: (data.type === '小时房' ? 'yyyy-MM-dd HH:mm:ss' : 'yyyy-MM-dd')}}</td>
+        <td>
+          <button nz-button nzType="primary" nz-popconfirm nzTitle="您确认退房吗?" (nzOnConfirm)="logout(data.id)"
+                  [disabled] = "data.customers.length == 0" id="logout">退房</button>
+        </td>
+      </tr>
+
+      <tr [nzExpand]="data.expand">
+        <td></td>
+        <td colspan="7">
+          <nz-table #innerTable [nzData]="data.customers" nzSize="middle" [nzShowPagination]="false">
+            <thead>
+            <tr>
+              <th>姓名</th>
+              <th>身份证号</th>
+              <th>手机号码</th>
+              <th>备注</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let data of innerTable.data">
+              <td>{{data.name}}</td>
+              <td>{{data.idCard}}</td>
+              <td>{{data.phoneNo}}</td>
+              <td>{{data.comment}}</td>
+            </tr>
+            </tbody>
+          </nz-table>
+        </td>
+      </tr>
+      </ng-template>
+    </tbody>
+  </nz-table>
+  </div>
+</div>
+
+<!--
+<nz-modal class="logout" *ngIf="logoutDto" [(nzVisible)]="isVisible" nzTitle="退房确认对话框"  (nzOnOk)="confirmLogout()" (nzOnCancel)="confirmLogout()">
+  <div nz-row>
+    <div nz-col nzSpan="8" class="title">房间号:</div>
+    <div nz-col nzSpan="12"><span>{{logoutDto.roomNo}}</span></div>
+  </div>
+  <div nz-row>
+    <div nz-col nzSpan="8" class="title">房型:</div>
+    <div nz-col nzSpan="12"><span>{{logoutDto.type}}</span></div>
+  </div>
+
+  <div nz-row>
+    <div nz-col nzSpan="8" class="title">单价:</div>
+    <div nz-col nzSpan="12"><span>{{logoutDto.price}}</span></div>
+  </div>
+  <div nz-row>
+    <div nz-col nzSpan="8" class="title">数量:</div>
+    <div nz-col nzSpan="12"><span>{{logoutDto.interval}}</span></div>
+  </div>
+
+  <div nz-row>
+    <div nz-col nzSpan="8" class="title">总金额:</div>
+    <div nz-col nzSpan="12"><span>{{logoutDto.sum}}</span></div>
+  </div>
+  <div nz-row>
+    <div nz-col nzSpan="8" class="title">结算日期:</div>
+    <div nz-col nzSpan="12"><span>{{logoutDto.logoutDate}}</span></div>
+  </div>
+</nz-modal>
+-->

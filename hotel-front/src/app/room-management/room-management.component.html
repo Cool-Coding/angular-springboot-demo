@@ -1,0 +1,78 @@
+<button nz-button (click)="showAddRoomDialog()" class="editable-add-btn">增加客房</button>
+<div class="room_management">
+<nz-table
+  #ajaxTable
+  nzShowSizeChanger
+  [nzFrontPagination]="false"
+  [nzData]="dataSet"
+  [nzLoading]="loading"
+  [nzTotal]="total"
+  [(nzPageIndex)]="pageIndex"
+  [(nzPageSize)]="pageSize"
+  (nzPageIndexChange)="updateData()"
+  (nzPageSizeChange)="updateData(true)">
+  <thead (nzSortChange)="sort($event)" nzSingleSort>
+  <tr>
+    <th nzShowSort nzSortKey="roomNo">客房号</th>
+    <th nzShowFilter [nzFilters]="filterRoomStatus" (nzFilterChange)="updateFilter($event)">状态</th>
+    <th nzShowSort nzSortKey="type"><span>房型</span></th>
+    <th nzShowSort nzSortKey="money"><span>单价</span></th>
+    <th nzShowSort nzSortKey="checkInDate"><span>入住日期</span></th>
+    <th nzShowSort nzSortKey="checkOutDate"><span>退房日期</span></th>
+    <th><span>床铺数</span></th>
+    <th><span>客人数</span></th>
+    <th nzShowSort nzSortKey="sumIncoming"><span>总收入</span></th>
+    <th>操作</th>
+    <th>可预订</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of ajaxTable.data">
+    <td><span>{{data.roomNo}}</span></td>
+    <td><span *ngIf="data.status == 0"><nz-tag [nzColor]="'#87d068'">空房</nz-tag></span>
+      <span *ngIf="data.status == 1"><nz-tag [nzColor]="'#f50'">有客</nz-tag></span>
+      <span *ngIf="data.status == 2"><nz-tag [nzColor]="'#c6c6c6'">不可订</nz-tag></span>
+    </td>
+    <td>{{data.type}}</td>
+    <td>{{data.money}}</td>
+    <td>{{data.checkInDate  | date: (data.type === '小时房' ? 'yyyy-MM-dd HH:mm:ss' : 'yyyy-MM-dd')}}</td>
+    <td>{{data.checkOutDate | date: (data.type === '小时房' ? 'yyyy-MM-dd HH:mm:ss' : 'yyyy-MM-dd')}}</td>
+    <td>{{data.beds.length}}</td>
+    <td>{{data.customers.length}}</td>
+    <td>{{data.sumIncoming}}</td>
+    <td><div><button nz-button nzType="primary" [disabled]="data.status == 1" (click)="show_room_management_dialog(data)">更改房型</button></div>
+       <div><button nz-button nzType="primary" (click)="show_bed_management_dialog(data.id, data.beds)">床铺管理</button></div>
+    </td>
+    <td><nz-switch class="roomManager_switch"[(ngModel)]="data.switchValue" [nzControl]="true" (click)="clickSwitch(data)"
+                   [nzDisabled]= "data.status == 1" [nzLoading]="data.statusLoading"></nz-switch></td>
+  </tr>
+  </tbody>
+</nz-table>
+<app-room-management-bed *ngIf="isVisible" [beds]="beds" [roomId]="roomId" [(ngModel)]="isVisible" ></app-room-management-bed>
+<app-room-management-room *ngIf="isRoomVisible" [room]="room" [(ngModel)]="isRoomVisible"></app-room-management-room>
+</div>
+
+<nz-modal [(nzVisible)]="isAddRoomVisible"
+          nzTitle="新增客房"
+          (nzOnOk)="confirmAddRoom()"
+          (nzOnCancel)="cancelAddRoom()"
+          *ngIf="room"
+          [nzOkLoading]="isOkLoading">
+  <div nz-row>
+    <div nz-col nzSpan="8" class="title"><nz-form-label nzRequired>客房号</nz-form-label></div>
+    <div nz-col nzSpan="12"><input type="text" nz-input [(ngModel)]="room.roomNo" placeholder="客房号">
+      <div class="wrong_message">{{message['roomNo']}} </div>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col nzSpan="8"><nz-form-label nzRequired>房型</nz-form-label></div>
+    <div nz-col nzSpan="12">
+      <nz-select [(ngModel)]="room.type">
+        <nz-option nzValue="小时房" nzLabel="小时房"></nz-option>
+        <nz-option nzValue="天房" nzLabel="天房"></nz-option>
+        <nz-option nzValue="月房" nzLabel="月房"></nz-option>
+      </nz-select>
+      <div class="wrong_message">{{message['type']}} </div>
+    </div>
+  </div>
+</nz-modal>

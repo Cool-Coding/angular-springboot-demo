@@ -1,0 +1,39 @@
+:host ::ng-deep .ant-layout-header,
+:host ::ng-deep .ant-layout-footer {
+  background: #fff;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+:host ::ng-deep .ant-layout-footer {
+  padding: 20px;
+  line-height: 1.5;
+  margin-top: 5px;
+  margin-left: 5px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+:host ::ng-deep .ant-layout-sider {
+  background: #fff;
+  color: #fff;
+}
+
+:host ::ng-deep .ant-layout-content {
+  background: #fff;
+  min-height: 120px;
+  line-height: 20px;
+}
+
+:host > ::ng-deep .ant-layout {
+  /*margin-bottom: 48px;*/
+}
+
+:host ::ng-deep .ant-layout:last-child {
+  margin: 0;
+}
+
+.content {
+  min-height: 500px;
+  margin-left: 5px;
+}

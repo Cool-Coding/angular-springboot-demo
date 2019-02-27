@@ -1,0 +1,71 @@
+.ant-advanced-search-form {
+  padding: 10px;
+  background: #ffffff;
+  border-radius: 6px;
+  min-width: 600px;
+}
+
+
+.search-result-list {
+  margin:5px 5px;
+  border-radius: 6px;
+  background-color: #ffffff;
+  min-height: 200px;
+  text-align: center;
+}
+
+[nz-form-label] {
+  overflow: visible;
+}
+
+button {
+  margin-left: 8px;
+}
+
+
+:host ::ng-deep .ant-table-expanded-row > td:last-child {
+  padding: 0 48px 0 8px;
+}
+
+:host ::ng-deep .ant-table-expanded-row > td:last-child .ant-table-thead th {
+  border-bottom: 1px solid #ffffff;
+}
+
+:host ::ng-deep .ant-table-expanded-row > td:last-child .ant-table-thead th:first-child {
+  padding-left: 0;
+}
+
+:host ::ng-deep .ant-table-expanded-row > td:last-child .ant-table-row td:first-child {
+  padding-left: 0;
+}
+
+:host ::ng-deep .ant-table-expanded-row .ant-table-row:last-child td {
+  border: none;
+}
+
+:host ::ng-deep .ant-table-expanded-row .ant-table-thead > tr > th {
+  background: none;
+}
+
+:host ::ng-deep .table-operation a.operation {
+  margin-right: 24px;
+}
+
+.logout div {
+  margin-top:10px;
+}
+
+.logout div.title{
+  text-align: right;
+  font-size: medium;
+}
+
+.logout div div:last-child{
+  font-size: small;
+  margin-left: 20px;
+  border-bottom: 1px dashed #fbfbfb;
+}
+
+#logout:enabled {
+  background-color: #40a9ff;
+}

@@ -1,0 +1,72 @@
+<nz-modal  nzTitle="床铺管理"  [(nzVisible)]="isVisible"  (nzOnOk)="confirm()" (nzOnCancel)="cancel()"
+           [nzOkLoading]="isOkLoading">
+  <button nz-button (click)="add()" class="editable-add-btn">增加床铺</button>
+  <nz-table
+    #editRowTable
+    nzBordered
+    [nzData]="dataSet">
+    <thead>
+    <tr>
+      <th nzWidth="25%">床名称</th>
+      <th nzWidth="25%">床型</th>
+      <th nzWidth="25%">床大小</th>
+      <th nzWidth="25%">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of editRowTable.data">
+      <td>
+        <div class="editable-cell">
+          <div class="editable-cell-text-wrapper">
+            <ng-container *ngIf="!editCache[data.key].edit">
+              {{data.name}}
+            </ng-container>
+            <ng-container *ngIf="editCache[data.key].edit">
+              <input type="text" nz-input [(ngModel)]="editCache[data.key].data.name">
+            </ng-container>
+          </div>
+        </div>
+      </td>
+      <td>
+        <ng-container *ngIf="!editCache[data.key].edit">
+          {{data.type}}
+        </ng-container>
+        <ng-container *ngIf="editCache[data.key].edit">
+          <nz-select [(ngModel)]="editCache[data.key].data.type">
+            <nz-option nzValue="三人床" nzLabel="三人床"></nz-option>
+            <nz-option nzValue="双人床" nzLabel="双人床"></nz-option>
+            <nz-option nzValue="单人床" nzLabel="单人床"></nz-option>
+          </nz-select>
+        </ng-container>
+      </td>
+      <td>
+        <ng-container *ngIf="!editCache[data.key].edit">
+          {{data.size}}
+        </ng-container>
+        <ng-container *ngIf="editCache[data.key].edit">
+          <input type="text" nz-input [(ngModel)]="editCache[data.key].data.size">
+        </ng-container>
+      </td>
+      <td>
+        <div class="editable-row-operations">
+          <ng-container *ngIf="!editCache[data.key].edit">
+            <a (click)="startEdit(data.key)">更改</a>
+          </ng-container>
+          <ng-container *ngIf="editCache[data.key].edit">
+            <a (click)="saveEdit(data.key)">保存</a>
+            <nz-popconfirm [nzTitle]="'确定不保存?'" (nzOnConfirm)="cancelEdit(data.key)">
+              <a nz-popconfirm>取消</a>
+            </nz-popconfirm>
+          </ng-container>
+          <nz-divider nzType="vertical"></nz-divider>
+          <ng-container>
+            <nz-popconfirm [nzTitle]="'确定删除?'" (nzOnConfirm)="delete(data.key)">
+              <a nz-popconfirm>删除</a>
+            </nz-popconfirm>
+          </ng-container>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</nz-modal>

@@ -1,0 +1,10 @@
+<input placeholder="客房号" #searchBox nz-input (input)="search(searchBox.value)" [nzAutocomplete]="auto" [(ngModel)]="value">
+<nz-autocomplete nzBackfill #auto>
+  <nz-auto-option *ngFor="let room of rooms$ | async" [nzValue]="room.roomNo">
+    <p *ngIf="showUnused ? true : room.status !== 2"><span>{{room.roomNo}}</span><span>{{room.type}}</span>
+      <span *ngIf="room.status == 0"><nz-tag [nzColor]="'#87d068'">空房</nz-tag></span>
+      <span *ngIf="room.status == 1"><nz-tag [nzColor]="'#f50'">有客</nz-tag></span>
+      <span *ngIf="room.status == 2"><nz-tag [nzColor]="'#f0f2f5'">不可订</nz-tag></span>
+    </p>
+  </nz-auto-option>
+</nz-autocomplete>

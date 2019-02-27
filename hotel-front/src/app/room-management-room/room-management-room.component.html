@@ -1,0 +1,61 @@
+<nz-modal [(nzVisible)]="isVisible" nzTitle="更改房型"  (nzOnOk)="confirm()" (nzOnCancel)="cancel()" *ngIf="charge">
+  <div nz-row>
+    <div nz-col nzSpan="8" class="title">客房号:</div>
+    <div nz-col nzSpan="12"><span>{{room.roomNo}}</span></div>
+  </div>
+  <div nz-row>
+    <div nz-col nzSpan="8"><nz-form-label nzRequired>房型</nz-form-label></div>
+    <div nz-col nzSpan="12">
+      <nz-select [(ngModel)]="charge.timeUnit" (ngModelChange)="timeUnitChange()">
+        <nz-option nzValue="小时房" nzLabel="小时房"></nz-option>
+        <nz-option nzValue="天房" nzLabel="天房"></nz-option>
+        <nz-option nzValue="月房" nzLabel="月房"></nz-option>
+      </nz-select>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col nzSpan="8"><nz-form-label nzRequired>数量</nz-form-label></div>
+    <div nz-col nzSpan="12">
+      <nz-input-number [(ngModel)]="charge.count" [nzMin]="1" [nzMax]="100" [nzStep]="1"></nz-input-number>
+      <span>{{charge.timeUnit.substr(0,charge.timeUnit.length-1)}}</span>
+      <div class="wrong_message">{{message['count']}} </div>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col nzSpan="8"><nz-form-label nzRequired>金额</nz-form-label></div>
+    <div nz-col nzSpan="12">
+      <nz-input-number [(ngModel)]="charge.money" [nzMin]="1" [nzMax]="99999" [nzStep]="1"></nz-input-number>
+      <span>元</span>
+      <div class="wrong_message">{{message['money']}}</div>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col nzSpan="8"><nz-form-label nzRequired>起始日期</nz-form-label></div>
+    <div nz-col nzSpan="12">
+      <ng-container *ngIf="charge.timeUnit === '小时房'">
+      <nz-date-picker  nzShowTime="charge.timeUnit === '小时房'" [(ngModel)]="charge.startDate" nzPlaceHolder="起始日期">
+      </nz-date-picker>
+        <div class="wrong_message">{{message['startDate']}}</div>
+      </ng-container>
+
+      <ng-container *ngIf="charge.timeUnit !== '小时房'">
+        <nz-date-picker [(ngModel)]="charge.startDate" nzPlaceHolder="起始日期"></nz-date-picker>
+        <div class="wrong_message">{{message['startDate']}}</div>
+      </ng-container>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col nzSpan="8"><nz-form-label nzRequired>结束日期</nz-form-label></div>
+    <div nz-col nzSpan="12">
+      <ng-container *ngIf="charge.timeUnit === '小时房'">
+        <nz-date-picker  nzShowTime="charge.timeUnit === '小时房'" [(ngModel)]="charge.endDate" nzPlaceHolder="截止日期">
+        </nz-date-picker>
+        <div class="wrong_message">{{message['endDate']}}</div>
+      </ng-container>
+      <ng-container *ngIf="charge.timeUnit !== '小时房'"><nz-date-picker [(ngModel)]="charge.endDate" nzPlaceHolder="截止日期">
+      </nz-date-picker>
+        <div class="wrong_message">{{message['endDate']}}</div>
+      </ng-container>
+    </div>
+  </div>
+</nz-modal>

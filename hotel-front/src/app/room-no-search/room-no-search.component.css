@@ -1,0 +1,12 @@
+p {
+  text-align: center;
+}
+
+p span:first-child {
+  float: left;
+}
+p span:last-child {
+  float: right;
+  padding-left: 15px;
+}
+

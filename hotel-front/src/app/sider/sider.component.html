@@ -1,0 +1,15 @@
+<ul nz-menu [nzMode]="'inline'" style="width: 200px;">
+  <i nz-menu-item>
+    <a routerLink="login"><span title><i class="anticon anticon-login"></i>登记</span></a>
+  </i>
+  <i nz-menu-item>
+    <a routerLink="logout"><span title><i class="anticon anticon-logout"></i>退房</span></a>
+  </i>
+  <li nz-submenu [nzOpen]=true>
+    <span title><i class="anticon anticon-edit"></i>管理</span>
+    <ul>
+      <li nz-menu-item><a routerLink="roomManagement">客房信息管理</a></li>
+      <li nz-menu-item><a routerLink="customerManagement">客人信息管理</a></li>
+    </ul>
+  </li>
+</ul>

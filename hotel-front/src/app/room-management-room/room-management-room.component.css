@@ -1,0 +1,24 @@
+[nz-row] {
+  margin: 6px;
+}
+
+[nz-row] div {
+  margin-right: 10px;
+}
+
+[nz-row] div:first-child {
+  text-align: right;
+}
+
+[nz-row] div:last-child input {
+  position: relative;
+  width: 60%;
+}
+
+[nz-row] div:last-child span{
+  margin-left: 10px;
+}
+
+.wrong_message {
+  color: #f5222d;
+}

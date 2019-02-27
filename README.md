@@ -14,11 +14,11 @@
 ![](https://github.com/Cool-Coding/photos/blob/master/hotel/entity-relation.png)    
 ## 业务流程
 ### 登记入住   
-![](https://github.com/Cool-Coding/photos/blob/master/hotel/flow01.png)   
+![](https://github.com/Cool-Coding/photos/blob/master/hotel/flow01.png)     
 ### 退房   
 ![](https://github.com/Cool-Coding/photos/blob/master/hotel/flow02.png)   
-### 管理
-#### 客房信息管理   
+### 管理   
+#### 客房信息管理    
 ![](https://github.com/Cool-Coding/photos/blob/master/hotel/flow03.png)   
 #### 客人信息管理   
 ![](https://github.com/Cool-Coding/photos/blob/master/hotel/flow04.png)   
@@ -58,7 +58,7 @@
 - 当用户选择的是已经有客的客户时，日期则变为灰色，自动显示客房当前的入住和退房时间，不可更改。
 - 客房号在登记时，不会显示不可订状态的客房；
 请求到达服务器后，在判断数据合法后，查询入住的客房信息，将其添加进客房信息中，然后保存(客房-客人关系由客房维护)；
-### 退房
+### 退房   
 **使用背景**     
 &emsp;&emsp;退房是客人登记入住后，到时间后退房使用；   
 **主要逻辑**

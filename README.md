@@ -5,7 +5,8 @@
 > <font size="4">[3.页面设计](#页面设计)</font>  
 > <font size="4">[4.功能设计](#功能设计)</font>  
 > <font size="4">[5.接口设计](#接口设计)</font>  
-> <font size="4">[6.开发计划](#开发计划)</font>  
+> <font size="4">[6.开发计划](#开发计划)</font>
+> <font size="4">[7.在线演示](#在线演示)</font>
 ## 模型设计
 &emsp;&emsp;旅馆管理系统，主要涉及到登记入住，退房以及客房和客人信息管理；经过分析抽像出涉及到的实体以及各实体之间的关系：  
 ![](https://github.com/Cool-Coding/photos/blob/master/hotel/model.png)    
@@ -97,5 +98,6 @@
 - [ ] 登录,权限管理     
 - [ ] 自适应手机端   
 
+## 在线演示
 **[在线演示](http://144.34.157.127)**    
 **bug反馈及建议:** https://github.com/Cool-Coding/angular-springboot-demo/issues

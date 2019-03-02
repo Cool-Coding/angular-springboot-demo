@@ -38,9 +38,9 @@
 ##### 床铺管理  
 ![](https://github.com/Cool-Coding/photos/blob/master/hotel/page06.png)    
 ##### 更改可预订状态   
-![](https://github.com/Cool-Coding/photos/blob/master/hotel/page06.png)    
-#### 客人信息管理   
 ![](https://github.com/Cool-Coding/photos/blob/master/hotel/page07.png)    
+#### 客人信息管理   
+![](https://github.com/Cool-Coding/photos/blob/master/hotel/page08.png)    
 ## 功能设计   
 ### 登记入住  
 **使用背景**   

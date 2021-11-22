@@ -55,4 +55,9 @@ export class Room {
    * 定价记录
    */
   charges: Charge[];
+
+  /**
+   * 是否更新床铺信息
+   */
+  updatingBed: boolean = false;
 }

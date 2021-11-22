@@ -1,3 +1,7 @@
 .idea
 *.iml
 target/
+*.xml
+dist/
+e2e
+node_modules/

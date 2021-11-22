@@ -74,7 +74,7 @@ export class RoomManagementRoomComponent implements OnInit, ControlValueAccessor
           this.room.charges.push(this.charge);
     }
     // 更改房间类型
-    this.roomService.updateRoom({id: this.room.id, type: this.charge.timeUnit, charges: this.room.charges} as Room).subscribe( result => {
+    this.roomService.updateRoom({id: this.room.id, type: this.charge.timeUnit, charges: this.room.charges, updatingBed: false} as Room).subscribe(result => {
       if (result !== undefined && result.success !== undefined && result.success) {
         this.room.type = result.data.type;
         this.room.money = result.data.money;

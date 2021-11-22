@@ -106,7 +106,7 @@ export class RoomManagementBedComponent implements OnInit, ControlValueAccessor 
     }
 
     this.isOkLoading = true;
-    this.roomService.updateRoom({id: this.roomId, beds: this.dataSet} as Room).subscribe( result => {
+    this.roomService.updateRoom({id: this.roomId, beds: this.dataSet,updatingBed: true} as Room).subscribe(result => {
       if (result !== undefined && result.success !== undefined && result.success) {
           this.beds.splice(0, this.beds.length);
           if (result.data != null && result.data.beds !== undefined && result.data.beds != null && result.data.beds.length > 0) {

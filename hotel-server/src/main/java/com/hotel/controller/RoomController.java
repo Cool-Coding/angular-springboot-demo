@@ -314,7 +314,7 @@ public class RoomController {
         }
 
 
-        RoomDto roomDto1 = Converters.room2RoomDto(roomService.updateRoom(Converters.roomDto2Room(roomDto)));
+        RoomDto roomDto1 = Converters.room2RoomDto(roomService.updateRoom(Converters.roomDto2Room(roomDto),roomDto.getUpdatingBed()));
         return new ResponseEntity<>(ResultDto.builder()
                 .success(true)
                 .code(RetCode.RETCODE_20004)

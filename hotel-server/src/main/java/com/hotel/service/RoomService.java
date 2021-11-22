@@ -45,5 +45,5 @@ public interface RoomService {
      * @param room  客房信息
      * @return      客房信息
      */
-    Room updateRoom(Room room);
+    Room updateRoom(Room room, boolean isUpdatingBed);
 }

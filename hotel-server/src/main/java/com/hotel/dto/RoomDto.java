@@ -51,4 +51,6 @@ public class RoomDto {
     private String   money;
 
     private List<IncomeDto> incomes;
+
+    private Boolean updatingBed;
 }

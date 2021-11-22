@@ -131,32 +131,34 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public Room updateRoom(Room room) {
+    public Room updateRoom(Room room, boolean isUpdatingBed) {
         Room currentInstance = roomRepository.findOne(room.getId());
         //删除床铺
-        List<Bed> beds = currentInstance.getBeds();
-        if (beds != null && beds.size() > 0){
-            List<Bed> newBeds = room.getBeds();
-            for (Bed bed : beds){
-                boolean exist = false;
-                if (newBeds !=null){
-                    for (Bed newBed : newBeds) {
-                        if (newBed.getId().equals(bed.getId())) {
-                            exist = true;
-                            break;
+        if (isUpdatingBed) {
+            List<Bed> beds = currentInstance.getBeds();
+            if (beds != null && beds.size() > 0) {
+                List<Bed> newBeds = room.getBeds();
+                for (Bed bed : beds) {
+                    boolean exist = false;
+                    if (newBeds != null) {
+                        for (Bed newBed : newBeds) {
+                            if (newBed.getId().equals(bed.getId())) {
+                                exist = true;
+                                break;
+                            }
                         }
                     }
-                }
 
-                if (!exist) {
-                    bedRepository.delete(bed.getId());
+                    if (!exist) {
+                        bedRepository.delete(bed.getId());
+                    }
                 }
             }
-        }
 
-        //如果新客房中无床铺，而客房原来有床铺，则将原来客房床铺置null，因为下面复制时会跳过null属性
-        if (room.getBeds() == null && beds != null && beds.size() > 0) {
-            currentInstance.setBeds(null);
+            //如果新客房中无床铺，而客房原来有床铺，则将原来客房床铺置null，因为下面复制时会跳过null属性
+            if (room.getBeds() == null && beds != null && beds.size() > 0) {
+                currentInstance.setBeds(null);
+            }
         }
 
         //支持部分更新
